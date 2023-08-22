@@ -13,7 +13,9 @@ class ChoiceRandomMutation(Mutation):
         for k in range(problem.n_var):
             var = problem.vars[k]
             mut = np.where(np.random.random(len(X)) < prob_var)[0]
-            X[mut, k] = var.sample(len(mut))
+            rep = var.sample(len(mut))
+            X = X.astype('<U{}'.format(max(len(rep), X.dtype.itemsize)))
+            X[mut, k] = rep
 
         return X
 
